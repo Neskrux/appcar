@@ -122,6 +122,11 @@ CREATE TABLE avaliacoes (
   -- Avaliador
   avaliador_nome TEXT NOT NULL,
   
+  -- Status de Venda
+  vendido BOOLEAN DEFAULT FALSE,
+  data_venda DATE,
+  valor_venda TEXT,
+  
   -- Fotos
   fotos TEXT[]
 );
@@ -131,6 +136,7 @@ CREATE INDEX idx_avaliacoes_cliente ON avaliacoes(cliente_nome);
 CREATE INDEX idx_avaliacoes_modelo ON avaliacoes(veiculo_modelo);
 CREATE INDEX idx_avaliacoes_data ON avaliacoes(data_avaliacao);
 CREATE INDEX idx_avaliacoes_avaliador ON avaliacoes(avaliador_nome);
+CREATE INDEX idx_avaliacoes_vendido ON avaliacoes(vendido);
 ```
 
 4. Configure as variáveis de ambiente:

@@ -15,6 +15,7 @@ export default function Avaliacoes() {
   const [filterYear, setFilterYear] = useState('')
   const [filterModel, setFilterModel] = useState('')
   const [filterAvaliador, setFilterAvaliador] = useState('')
+  const [filterVendido, setFilterVendido] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function Avaliacoes() {
 
   useEffect(() => {
     filterAvaliacoes()
-  }, [avaliacoes, searchTerm, filterYear, filterModel, filterAvaliador])
+  }, [avaliacoes, searchTerm, filterYear, filterModel, filterAvaliador, filterVendido])
 
   const loadAvaliacoes = async () => {
     try {
@@ -76,6 +77,14 @@ export default function Avaliacoes() {
       filtered = filtered.filter(a => 
         a.avaliador_nome?.toLowerCase().includes(filterAvaliador.toLowerCase())
       )
+    }
+
+    if (filterVendido) {
+      if (filterVendido === 'vendido') {
+        filtered = filtered.filter(a => a.vendido)
+      } else if (filterVendido === 'nao-vendido') {
+        filtered = filtered.filter(a => !a.vendido)
+      }
     }
 
     setFilteredAvaliacoes(filtered)
@@ -146,7 +155,7 @@ export default function Avaliacoes() {
             <h2 className="text-lg font-semibold">Filtros</h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <input
@@ -178,6 +187,15 @@ export default function Avaliacoes() {
               onChange={(e) => setFilterAvaliador(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
             />
+            <select
+              value={filterVendido}
+              onChange={(e) => setFilterVendido(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            >
+              <option value="">Todos os status</option>
+              <option value="vendido">Vendidos</option>
+              <option value="nao-vendido">Não vendidos</option>
+            </select>
           </div>
         </div>
 
@@ -214,10 +232,17 @@ export default function Avaliacoes() {
               >
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        {avaliacao.veiculo_modelo}
-                      </h3>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-lg font-semibold text-gray-900">
+                          {avaliacao.veiculo_modelo}
+                        </h3>
+                        {avaliacao.vendido && (
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            VENDIDO
+                          </span>
+                        )}
+                      </div>
                       <p className="text-sm text-gray-600">
                         {avaliacao.veiculo_versao} - {avaliacao.veiculo_ano}
                       </p>
@@ -261,6 +286,18 @@ export default function Avaliacoes() {
                       <Calendar className="h-4 w-4 mr-2" />
                       {new Date(avaliacao.data_avaliacao).toLocaleDateString('pt-BR')}
                     </div>
+                    {avaliacao.vendido && avaliacao.data_venda && (
+                      <div className="flex items-center text-green-600">
+                        <Calendar className="h-4 w-4 mr-2" />
+                        Vendido em: {new Date(avaliacao.data_venda).toLocaleDateString('pt-BR')}
+                      </div>
+                    )}
+                    {avaliacao.vendido && avaliacao.valor_venda && (
+                      <div className="flex items-center text-green-600">
+                        <span className="font-medium mr-2">Valor:</span>
+                        {avaliacao.valor_venda}
+                      </div>
+                    )}
                   </div>
 
                   <div className="mt-4 pt-4 border-t">

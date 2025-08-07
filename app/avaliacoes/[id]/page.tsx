@@ -276,17 +276,46 @@ export default function VisualizarAvaliacao() {
             </div>
           </section>
 
-          {/* Avaliador */}
-          <section className="mb-8">
-            <h2 className="text-xl font-bold mb-4 text-gray-800 border-b pb-2">
-              AVALIADOR
-            </h2>
-            <p className="text-lg">{avaliacao.avaliador_nome}</p>
-            <div className="mt-8 pt-4 border-t">
-              <p className="text-center text-gray-600">_____________________________</p>
-              <p className="text-center text-sm text-gray-600 mt-2">Assinatura do Avaliador</p>
-            </div>
-          </section>
+                     {/* Avaliador */}
+           <section className="mb-8">
+             <h2 className="text-xl font-bold mb-4 text-gray-800 border-b pb-2">
+               AVALIADOR
+             </h2>
+             <p className="text-lg">{avaliacao.avaliador_nome}</p>
+             <div className="mt-8 pt-4 border-t">
+               <p className="text-center text-gray-600">_____________________________</p>
+               <p className="text-center text-sm text-gray-600 mt-2">Assinatura do Avaliador</p>
+             </div>
+           </section>
+
+           {/* Status de Venda */}
+           {avaliacao.vendido && (
+             <section className="mb-8">
+               <h2 className="text-xl font-bold mb-4 text-gray-800 border-b pb-2">
+                 STATUS DE VENDA
+               </h2>
+               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                 <div className="flex items-center mb-3">
+                   <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                   <span className="font-semibold text-green-800">VEÍCULO VENDIDO</span>
+                 </div>
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                   {avaliacao.data_venda && (
+                     <div>
+                       <span className="font-semibold">Data da Venda:</span>
+                       <p className="text-gray-700">{new Date(avaliacao.data_venda).toLocaleDateString('pt-BR')}</p>
+                     </div>
+                   )}
+                   {avaliacao.valor_venda && (
+                     <div>
+                       <span className="font-semibold">Valor da Venda:</span>
+                       <p className="text-gray-700">{avaliacao.valor_venda}</p>
+                     </div>
+                   )}
+                 </div>
+               </div>
+             </section>
+           )}
 
           {/* Fotos */}
           {avaliacao.fotos && avaliacao.fotos.length > 0 && (

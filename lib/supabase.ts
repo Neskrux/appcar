@@ -46,6 +46,10 @@ export interface Avaliacao {
   aval_interna: string
   // Avaliador
   avaliador_nome: string
+  // Status
+  vendido: boolean
+  data_venda?: string
+  valor_venda?: string
   // Fotos
   fotos: string[] // URLs das fotos
 }

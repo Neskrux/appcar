@@ -21,6 +21,7 @@ export default function NovaAvaliacao() {
     veiculo_leilao: false,
     veiculo_batido: false,
     doc_financiamento: false,
+    vendido: false,
     fotos: []
   })
 
@@ -508,6 +509,53 @@ export default function NovaAvaliacao() {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                   required
                 />
+              </div>
+            </div>
+
+            {/* Status de Venda */}
+            <div className="border-b pb-6">
+              <h2 className="text-xl font-semibold mb-4 text-gray-800">Status de Venda</h2>
+              <div className="space-y-4">
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    name="vendido"
+                    checked={formData.vendido}
+                    onChange={handleInputChange}
+                    className="w-4 h-4 text-black focus:ring-black"
+                  />
+                  <span className="text-sm font-medium">Veículo Vendido</span>
+                </label>
+                
+                {formData.vendido && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Data da Venda
+                      </label>
+                      <input
+                        type="date"
+                        name="data_venda"
+                        value={formData.data_venda || ''}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Valor da Venda
+                      </label>
+                      <input
+                        type="text"
+                        name="valor_venda"
+                        value={formData.valor_venda || ''}
+                        onChange={handleInputChange}
+                        placeholder="R$ 0,00"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
