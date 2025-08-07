@@ -138,6 +138,9 @@ export default function VisualizarAvaliacao() {
               <div>
                 <span className="font-semibold">Cidade:</span> {avaliacao.cliente_cidade || 'N/A'}
               </div>
+              <div>
+                <span className="font-semibold">Por onde veio:</span> {avaliacao.cliente_origem || 'N/A'}
+              </div>
               <div className="md:col-span-2">
                 <span className="font-semibold">Endereço:</span> {avaliacao.cliente_endereco || 'N/A'}
               </div>

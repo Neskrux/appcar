@@ -153,6 +153,24 @@ export default function NovaAvaliacao() {
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                   />
                 </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Por onde veio? *
+                  </label>
+                  <select
+                    name="cliente_origem"
+                    value={formData.cliente_origem || ''}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                    required
+                  >
+                    <option value="">Selecione...</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Google">Google</option>
+                    <option value="Indicação">Indicação</option>
+                    <option value="Outros">Outros</option>
+                  </select>
+                </div>
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Endereço

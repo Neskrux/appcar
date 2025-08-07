@@ -275,6 +275,10 @@ export default function Avaliacoes() {
                       {avaliacao.cliente_nome}
                     </div>
                     <div className="flex items-center text-gray-600">
+                      <span className="font-medium mr-2">Origem:</span>
+                      {avaliacao.cliente_origem || 'N/A'}
+                    </div>
+                    <div className="flex items-center text-gray-600">
                       <span className="font-medium mr-2">Placa:</span>
                       {avaliacao.veiculo_placa || 'N/A'}
                     </div>

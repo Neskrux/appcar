@@ -15,6 +15,7 @@ export interface Avaliacao {
   cliente_celular: string
   cliente_endereco: string
   cliente_cidade: string
+  cliente_origem: string // Por onde veio: Instagram, Google, Indicação, Outros
   // Dados do Veículo
   veiculo_modelo: string
   veiculo_ano: string

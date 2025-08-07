@@ -61,7 +61,7 @@ export default function Relatorios() {
     const filtered = getFilteredAvaliacoes()
     
     const headers = [
-      'Data', 'Cliente', 'Celular', 'Cidade', 'Endereço',
+      'Data', 'Cliente', 'Celular', 'Cidade', 'Origem', 'Endereço',
       'Modelo', 'Ano', 'Versão', 'Motor', 'Placa', 'KM', 'FIPE',
       'Manual', 'Chave Cópia', 'Sinistro', 'Leilão', 'Batido',
       'Proprietário', 'Financiamento', 'Valor Quitação', 'Débitos DETRAN',
@@ -73,6 +73,7 @@ export default function Relatorios() {
       a.cliente_nome,
       a.cliente_celular || '',
       a.cliente_cidade || '',
+      a.cliente_origem || '',
       a.cliente_endereco || '',
       a.veiculo_modelo,
       a.veiculo_ano || '',

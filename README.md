@@ -86,6 +86,7 @@ CREATE TABLE avaliacoes (
   cliente_celular TEXT,
   cliente_endereco TEXT,
   cliente_cidade TEXT,
+  cliente_origem TEXT, -- Por onde veio: Instagram, Google, Indicação, Outros
   
   -- Dados do Veículo
   veiculo_modelo TEXT NOT NULL,
