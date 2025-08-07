@@ -294,7 +294,21 @@ export default function VisualizarAvaliacao() {
               <h2 className="text-xl font-bold mb-4 text-gray-800 border-b pb-2">
                 FOTOS
               </h2>
-              <p className="text-gray-600">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {avaliacao.fotos.map((url, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={url}
+                      alt={`Foto ${index + 1}`}
+                      className="w-full h-32 object-cover rounded-lg shadow-md"
+                    />
+                    <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
+                      Foto {index + 1}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-gray-600 mt-4">
                 {avaliacao.fotos.length} foto(s) anexada(s)
               </p>
             </section>

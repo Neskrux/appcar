@@ -7,6 +7,7 @@ import { useAvaliacaoStore } from '@/lib/store'
 import toast from 'react-hot-toast'
 import { Camera, Save, FileText } from 'lucide-react'
 import { motion } from 'framer-motion'
+import ImageUpload from '@/components/ImageUpload'
 
 export default function NovaAvaliacao() {
   const router = useRouter()
@@ -22,6 +23,10 @@ export default function NovaAvaliacao() {
     doc_financiamento: false,
     fotos: []
   })
+
+  const handleImagesUploaded = (urls: string[]) => {
+    setFormData(prev => ({ ...prev, fotos: urls }))
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target
@@ -509,26 +514,14 @@ export default function NovaAvaliacao() {
             {/* Fotos */}
             <div className="pb-6">
               <h2 className="text-xl font-semibold mb-4 text-gray-800">Fotos</h2>
-              <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                <Camera className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                <p className="text-gray-600 mb-2">Upload de Fotos</p>
-                <p className="text-sm text-gray-500">
-                  Painel ligado, internas, motor, laterais, frente, traseira, teto, pneus, capô e defeitos
-                </p>
-                <input
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  className="hidden"
-                  id="file-upload"
-                />
-                <label
-                  htmlFor="file-upload"
-                  className="mt-4 inline-block bg-black text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-800 transition"
-                >
-                  Selecionar Fotos
-                </label>
-              </div>
+              <p className="text-sm text-gray-500 mb-4">
+                Painel ligado, internas, motor, laterais, frente, traseira, teto, pneus, capô e defeitos
+              </p>
+              <ImageUpload 
+                onImagesUploaded={handleImagesUploaded}
+                maxImages={20}
+                folder="avaliacoes"
+              />
             </div>
 
             {/* Botões */}
