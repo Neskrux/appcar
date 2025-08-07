@@ -6,6 +6,7 @@ import { supabase, Avaliacao } from '@/lib/supabase'
 import { ArrowLeft, Printer, Download, Edit, Car } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import CarDamageMap from '@/components/CarDamageMap'
 
 export default function VisualizarAvaliacao() {
   const params = useParams()
@@ -319,6 +320,19 @@ export default function VisualizarAvaliacao() {
                </div>
              </section>
            )}
+
+          {/* Mapa de Danos */}
+          {avaliacao.danos_mapeados && avaliacao.danos_mapeados.length > 0 && (
+            <section className="mb-8 no-print">
+              <h2 className="text-xl font-bold mb-4 text-gray-800 border-b pb-2">
+                MAPA DE DANOS
+              </h2>
+              <CarDamageMap 
+                initialDamages={avaliacao.danos_mapeados}
+                onDamageUpdate={() => {}} 
+              />
+            </section>
+          )}
 
           {/* Fotos */}
           {avaliacao.fotos && avaliacao.fotos.length > 0 && (

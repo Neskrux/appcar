@@ -129,7 +129,10 @@ CREATE TABLE avaliacoes (
   valor_venda TEXT,
   
   -- Fotos
-  fotos TEXT[]
+  fotos TEXT[],
+  
+  -- Mapa de Danos
+  danos_mapeados TEXT[]
 );
 
 -- Criar índices para melhor performance

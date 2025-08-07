@@ -53,4 +53,6 @@ export interface Avaliacao {
   valor_venda?: string
   // Fotos
   fotos: string[] // URLs das fotos
+  // Mapa de Danos
+  danos_mapeados: string[] // IDs das áreas danificadas
 }

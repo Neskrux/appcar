@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import { Camera, Save, FileText } from 'lucide-react'
 import { motion } from 'framer-motion'
 import ImageUpload from '@/components/ImageUpload'
+import CarDamageMap from '@/components/CarDamageMap'
 
 export default function NovaAvaliacao() {
   const router = useRouter()
@@ -22,11 +23,20 @@ export default function NovaAvaliacao() {
     veiculo_batido: false,
     doc_financiamento: false,
     vendido: false,
-    fotos: []
+    fotos: [],
+    danos_mapeados: []
   })
 
   const handleImagesUploaded = (urls: string[]) => {
     setFormData(prev => ({ ...prev, fotos: urls }))
+  }
+
+  const handleDamageUpdate = (damages: string[]) => {
+    try {
+      setFormData(prev => ({ ...prev, danos_mapeados: damages }))
+    } catch (error) {
+      console.error('Erro ao atualizar danos:', error)
+    }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -41,6 +51,7 @@ export default function NovaAvaliacao() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     setLoading(true)
 
     try {
@@ -50,11 +61,17 @@ export default function NovaAvaliacao() {
         return
       }
 
+      // Garantir que danos_mapeados seja sempre um array
+      const dataToSave = {
+        ...formData,
+        danos_mapeados: formData.danos_mapeados || []
+      }
+
       // Se estiver usando Supabase configurado
       if (process.env.NEXT_PUBLIC_SUPABASE_URL !== 'your-supabase-url') {
         const { data, error } = await supabase
           .from('avaliacoes')
-          .insert([formData])
+          .insert([dataToSave])
           .select()
           .single()
 
@@ -63,7 +80,7 @@ export default function NovaAvaliacao() {
       } else {
         // Modo local - salva no localStorage
         const localData = {
-          ...formData,
+          ...dataToSave,
           id: Date.now().toString(),
           created_at: new Date().toISOString()
         } as Avaliacao
@@ -577,6 +594,18 @@ export default function NovaAvaliacao() {
               </div>
             </div>
 
+            {/* Mapa de Danos */}
+            <div className="border-b pb-6">
+              <h2 className="text-xl font-semibold mb-4 text-gray-800">Mapeamento de Danos</h2>
+              <p className="text-sm text-gray-500 mb-4">
+                Clique nas áreas do veículo para marcar onde há danos ou defeitos
+              </p>
+              <CarDamageMap 
+                onDamageUpdate={handleDamageUpdate}
+                initialDamages={formData.danos_mapeados || []}
+              />
+            </div>
+
             {/* Fotos */}
             <div className="pb-6">
               <h2 className="text-xl font-semibold mb-4 text-gray-800">Fotos</h2>
@@ -599,14 +628,14 @@ export default function NovaAvaliacao() {
               >
                 Cancelar
               </button>
-              <button
-                type="submit"
-                disabled={loading}
-                className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition flex items-center"
-              >
-                <Save className="h-5 w-5 mr-2" />
-                {loading ? 'Salvando...' : 'Salvar Avaliação'}
-              </button>
+                             <button
+                 type="submit"
+                 disabled={loading}
+                 className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition flex items-center"
+               >
+                 <Save className="h-5 w-5 mr-2" />
+                 {loading ? 'Salvando...' : 'Salvar Avaliação'}
+               </button>
             </div>
           </form>
         </div>
